@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
+const INITIAL_ACCOUNT_BALANCE = 100
+
 const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
 
@@ -20,6 +22,7 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       name: `${firstName} ${lastName}`,
+      accountBalance: INITIAL_ACCOUNT_BALANCE
     });
     const token = jwt.sign(
       {
