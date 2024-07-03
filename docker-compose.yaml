@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6-jammy
+    command: --quiet --logpath /dev/null
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=yams
+    volumes:
+      - dbdata:/data/db
+
+  mongo-ui:
+    image: mongo-express
+    ports:
+      - '8081:8081'
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://root:yams@mongo:27017
+      - ME_CONFIG_BASICAUTH=false
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile.dev
+    environment:
+      - PORT=5000
+      - MONGODB_URL=mongodb://root:yams@mongo:27017
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile.dev
+    ports:
+      - '3000:3000'
+
+volumes:
+  dbdata:
