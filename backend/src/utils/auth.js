@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import UnauthorizedError from "../errors/unauthorized-error";
 
 const auth = async (req, res, next) => {
   try {
@@ -15,7 +16,13 @@ const auth = async (req, res, next) => {
       req.userId = decodedData?.sub;
     }
 
-    next();
+    let err;
+
+    if (!req.userId) {
+      err = new UnauthorizedError();
+    }
+
+    next(err);
   } catch (error) { }
 };
 

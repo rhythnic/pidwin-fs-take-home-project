@@ -1,20 +1,24 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import ServerError from "../errors/server-error.js";
+import InvalidInputError from "../errors/invalid-input-error.js";
 
 const INITIAL_ACCOUNT_BALANCE = 100
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User Already Exist" });
+      next(new InvalidInputError("User Already Exist"));
+      return;
     }
 
     if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Password Does Not Match" });
+      next(new InvalidInputError("Password Does Not Match"));
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -37,8 +41,8 @@ const signup = async (req, res) => {
 
     res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-    console.log(error);
+    console.error(error);
+    next(new ServerError());
   }
 };
 

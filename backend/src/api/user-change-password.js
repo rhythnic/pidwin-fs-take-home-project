@@ -1,18 +1,18 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
+import ServerError from "../errors/server-error.js";
+import NotFoundError from "../errors/not-found-error.js";
+import InvalidInputError from "../errors/invalid-input-error.js";
 
-const changePassword = async (req, res) => {
+const changePassword = async (req, res, next) => {
   const { email, oldPassword, newPassword } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      return res.status(404).json({ message: "User Does Not Exist" });
-    }
-
-    if (!req.userId) {
-      return res.json({ message: "Unauthenticated" });
+      next(new NotFoundError("User Does Not Exist"));
+      return;
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -21,7 +21,8 @@ const changePassword = async (req, res) => {
     );
 
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Invalid Password" });
+      next(new InvalidInputError("Invalid Password"));
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 12);
@@ -33,7 +34,8 @@ const changePassword = async (req, res) => {
 
     res.status(200).json(updatePassword);
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    console.error(error);
+    next(new ServerError());
   }
 };
 
