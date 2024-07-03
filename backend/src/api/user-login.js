@@ -4,6 +4,7 @@ import User from "../models/user.js";
 import ServerError from "../errors/server-error.js";
 import NotFoundError from "../errors/not-found-error.js";
 import InvalidInputError from "../errors/invalid-input-error.js";
+import UserDto from "../dto/user.dto.js";
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -27,12 +28,7 @@ const login = async (req, res, next) => {
     }
 
     const token = jwt.sign(
-      {
-        _id: existingUser._id,
-        name: existingUser.name,
-        email: existingUser.email,
-        password: existingUser.password,
-      },
+      UserDto.fromModel(existingUser),
       "test",
       { expiresIn: "1h" }
     );

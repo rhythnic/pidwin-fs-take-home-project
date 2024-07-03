@@ -1,9 +1,11 @@
 class UserDto {
-    constructor(model) {
-        this.id = model.id;
-        this.name = model.name;
-        this.email = model.email;
-        this.accountBalance = model.accountBalance;
+    static fromModel(model) {
+        return {
+            _id: model._id,
+            name: model.name,
+            email: model.email,
+            accountBalance: model.accountBalance
+        }
     }
 }
 

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import ServerError from "../errors/server-error.js";
 import InvalidInputError from "../errors/invalid-input-error.js";
+import UserDto from "../dto/user.dto.js";
 
 const INITIAL_ACCOUNT_BALANCE = 100
 
@@ -29,12 +30,7 @@ const signup = async (req, res, next) => {
       accountBalance: INITIAL_ACCOUNT_BALANCE
     });
     const token = jwt.sign(
-      {
-        _id: result._id,
-        name: result.name,
-        email: result.email,
-        password: result.hashedPassword,
-      },
+      UserDto.fromModel(result),
       "test",
       { expiresIn: "1h" }
     );

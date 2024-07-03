@@ -1,7 +1,7 @@
-import UnauthorizedError from "../errors/unauthorized-error";
-import ServerError from "../errors/server-error";
-import NotFoundError from "../errors/not-found-error";
-import InvalidInputError from "../errors/invalid-input-error";
+import UnauthorizedError from "../errors/unauthorized-error.js";
+import ServerError from "../errors/server-error.js";
+import NotFoundError from "../errors/not-found-error.js";
+import InvalidInputError from "../errors/invalid-input-error.js";
 
 const errorHandler = async (error, req, res, next) => {
   if (res.headersSent) {

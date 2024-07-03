@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { AppBar, Typography, Toolbar, Avatar, Button } from "@mui/material";
+import { AppBar, Typography, Toolbar, Avatar, Button, Grid } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
+import { CircleStackIcon } from '@heroicons/react/24/solid';
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
 
@@ -49,12 +50,30 @@ const Navbar = () => {
       <Toolbar sx={styles.toolbar}>
         {user !== "null" && user !== null ? (
           <div sx={styles.profile}>
-            <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
-              {user.name.charAt(0)}
-            </Avatar>
-            <Typography sx={styles.userName} variant="h6">
-              {user.name}
-            </Typography>
+            <Grid
+              container
+              direction="row"
+              justifyContent="start"
+              alignItems="center"
+            >
+              <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
+                {user.name.charAt(0)}
+              </Avatar>
+              <Typography sx={styles.userName} variant="h6">
+                {user.name}
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justifyContent="start"
+              alignItems="center"
+            >
+              <CircleStackIcon style={{ width:"20px", height:"20px", marginLeft: "10px", marginRight: "4px" }} />
+              <Typography sx={styles.userName} variant="h6">
+                {user.accountBalance}
+              </Typography>
+            </Grid>
             <Button
               variant="contained"
               sx={styles.logout}

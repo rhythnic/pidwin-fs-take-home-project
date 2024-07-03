@@ -37,5 +37,10 @@ export const styles = {
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+    marginRight: "4px",
   },
+  tokenIcon: {
+    width: "5px",
+    height: "5px",
+  }
 };
