@@ -18,12 +18,12 @@ const coinTossSchema = mongoose.Schema({
   chosenSide: {
     type: String,
     required: true,
-    enum: CoinSide.values(),
+    enum: Object.values(CoinSide),
   },
   flipSide: {
     type: String,
     required: true,
-    enum: CoinSide.values(),
+    enum: Object.values(CoinSide),
   },
   createdAt: {
     type: Date,

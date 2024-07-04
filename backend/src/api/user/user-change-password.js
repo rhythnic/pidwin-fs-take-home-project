@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import User from "../models/user.js";
-import NotFoundError from "../errors/not-found-error.js";
-import InvalidInputError from "../errors/invalid-input-error.js";
+import User from "../../models/user.js";
+import NotFoundError from "../../errors/not-found-error.js";
+import InvalidInputError from "../../errors/invalid-input-error.js";
 
 const changePassword = async (req, res, next) => {
   const { email, oldPassword, newPassword } = req.body;

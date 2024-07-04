@@ -1,10 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
-import ServerError from "../errors/server-error.js";
-import NotFoundError from "../errors/not-found-error.js";
-import InvalidInputError from "../errors/invalid-input-error.js";
-import UserDto from "../dto/user.dto.js";
+import User from "../../models/user.js";
+import ServerError from "../../errors/server-error.js";
+import NotFoundError from "../../errors/not-found-error.js";
+import InvalidInputError from "../../errors/invalid-input-error.js";
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -26,7 +25,7 @@ const login = async (req, res, next) => {
     }
 
     const token = jwt.sign(
-      UserDto.fromModel(existingUser),
+      { _id: existingUser._id },
       "test",
       { expiresIn: "1h" }
     );

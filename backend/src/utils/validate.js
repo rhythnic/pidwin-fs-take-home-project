@@ -1,5 +1,5 @@
 import { assert } from 'superstruct'
-import InvalidInputError from '../errors/invalid-input-error';
+import InvalidInputError from '../errors/invalid-input-error.js';
 
 const validate = (schema) => (req, res, next) => {
     try {

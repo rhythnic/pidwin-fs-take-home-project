@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../constants/actionTypes";
+import { LOGIN, LOGOUT, SET_USER } from "../constants/actionTypes";
 import * as api from "../api";
 import * as messages from "../messages";
 
@@ -34,3 +34,12 @@ export const changePassword = (formData, history) => async (dispatch) => {
     messages.error(error.response.data.message);
   }
 };
+
+export const fetchUser = async (dispatch) => {
+  try {
+    const { data } = await api.getUser();
+    dispatch({ type: SET_USER, data })
+  } catch (error) {
+    messages.error(error.response.data.message);
+  }
+}

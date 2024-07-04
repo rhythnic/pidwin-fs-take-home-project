@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import UnauthorizedError from "../errors/unauthorized-error.js";
+import ForbiddenError from "../errors/forbidden-error.js";
 
 const auth = async (req, res, next) => {
   try {
@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
     let err;
 
     if (!req.userId) {
-      err = new UnauthorizedError();
+      err = new ForbiddenError();
     }
 
     next(err);

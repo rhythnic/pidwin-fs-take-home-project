@@ -1,4 +1,4 @@
-import UnauthorizedError from "../errors/unauthorized-error.js";
+import ForbiddenError from "../errors/forbidden-error.js";
 import ServerError from "../errors/server-error.js";
 import NotFoundError from "../errors/not-found-error.js";
 import InvalidInputError from "../errors/invalid-input-error.js";
@@ -22,7 +22,7 @@ const errorHandler = async (error, req, res, next) => {
 const errorStatus = (error) => {
   switch(error.constructor) {
     case InvalidInputError: return 400;
-    case UnauthorizedError: return 403;
+    case ForbiddenError: return 403;
     case NotFoundError: return 404;
     case ServerError: return 500;
     default: return 500;

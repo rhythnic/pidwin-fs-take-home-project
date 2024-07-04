@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import UserDto from "./user.dto";
+import UserDto from "./user.dto.js";
 
 class CoinTossDto {
   static fromModel(model) {

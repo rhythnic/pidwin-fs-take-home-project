@@ -33,6 +33,6 @@ export default class CoinTossService {
 
   flipCoin() {
     const index = Math.floor(Math.random() * 2);
-    return CoinSide.values()[index];
+    return Object.values(CoinSide)[index];
   }
 }

@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button, Grid } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { CircleStackIcon } from '@heroicons/react/24/solid';
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
+import { fetchUser } from "../../actions/login";
+import { userSelector, tokenSelector } from "../../selectors";
 
 const Navbar = () => {
-  const [user, setUser] = useState(
-    localStorage.getItem("profile")
-      ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-      : "null"
-  );
+  const user = useSelector(userSelector);
+  const token = useSelector(tokenSelector);
+
   const dispatch = useDispatch();
   let location = useLocation();
   const history = useNavigate();
@@ -20,19 +20,17 @@ const Navbar = () => {
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
     history("/auth");
-    setUser("null");
   };
 
   useEffect(() => {
-    if (user !== "null" && user !== null) {
-      if (user.exp * 1000 < new Date().getTime()) logout();
-    }
-    setUser(
-      localStorage.getItem("profile")
-        ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-        : "null"
-    );
+    if (!token) return;
+    const decoded = jwtDecode(token);
+    if (decoded.exp * 1000 < new Date().getTime()) logout();
   }, [location]);
+
+  useEffect(() => {
+    if (token && !user) dispatch(fetchUser)
+  }, [token])
 
   return (
     <AppBar sx={styles.appBar} position="static" color="inherit">
@@ -48,7 +46,7 @@ const Navbar = () => {
         </Typography>
       </div>
       <Toolbar sx={styles.toolbar}>
-        {user !== "null" && user !== null ? (
+        {user ? (
           <>
             <Grid
               container
