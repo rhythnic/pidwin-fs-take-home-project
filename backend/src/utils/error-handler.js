@@ -8,6 +8,11 @@ const errorHandler = async (error, req, res, next) => {
     return next(error)
   }
 
+  if (error.constructor === Error) {
+    console.error(error);
+    error = new ServerError(error.message);
+  }
+
   const status = errorStatus(error);
   const message = error.message || "Something went wrong";
 

@@ -13,13 +13,11 @@ const signup = async (req, res, next) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      next(new InvalidInputError("User Already Exist"));
-      return;
+      throw new InvalidInputError("User Already Exist");
     }
 
     if (password !== confirmPassword) {
-      next(new InvalidInputError("Password Does Not Match"));
-      return;
+      throw new InvalidInputError("Password Does Not Match");
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);

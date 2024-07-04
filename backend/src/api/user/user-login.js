@@ -1,42 +1,41 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import ServerError from "../errors/server-error.js";
 import NotFoundError from "../errors/not-found-error.js";
 import InvalidInputError from "../errors/invalid-input-error.js";
+import UserDto from "../dto/user.dto.js";
 
-const changePassword = async (req, res, next) => {
-  const { email, oldPassword, newPassword } = req.body;
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      next(new NotFoundError("User Does Not Exist"));
-      return;
+      throw new NotFoundError("User Does Not Exist");
     }
 
     const isPasswordCorrect = await bcrypt.compare(
-      oldPassword,
+      password,
       existingUser.password
     );
 
     if (!isPasswordCorrect) {
-      next(new InvalidInputError("Invalid Password"));
-      return;
+      throw new InvalidInputError("Invalid Password");
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 12);
-    const updatePassword = await User.findByIdAndUpdate(
-      existingUser._id,
-      { password: hashedPassword },
-      { new: true }
+    const token = jwt.sign(
+      UserDto.fromModel(existingUser),
+      "test",
+      { expiresIn: "1h" }
     );
 
-    res.status(200).json(updatePassword);
+    res.status(200).json({ token });
   } catch (error) {
     console.error(error);
     next(new ServerError());
   }
 };
 
-export default changePassword;
+export default login;
