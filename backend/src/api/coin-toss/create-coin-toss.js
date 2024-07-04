@@ -4,7 +4,7 @@ import CoinTossDto from "../../dto/coin-toss.dto.js";
 
 const createCoinToss = async (req, res, next) => {
   try {
-    let user = await new UserService().getUserOrFail(req.userId);
+    let user = await new UserService().getOrFail(req.userId);
     const coinToss = await new CoinTossService().createCoinToss(user, req.body);
     res.status(200).json(CoinTossDto.fromModel(coinToss));
   } catch (error) {

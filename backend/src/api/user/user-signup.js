@@ -1,8 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../models/user.js";
-import ServerError from "../../errors/server-error.js";
-import InvalidInputError from "../../errors/invalid-input-error.js";
+import { ServerError, InvalidInputError } from "../../errors/index.js";
 
 const INITIAL_ACCOUNT_BALANCE = 100
 

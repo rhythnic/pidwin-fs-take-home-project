@@ -1,3 +1,4 @@
+import { NotFoundError } from "../errors/index.js";
 import User from "../models/user.js";
 
 export default class UserService {

@@ -1,5 +1,6 @@
 import UserService from "./user.service.js";
 import CoinToss, { CoinSide } from "../models/coin-toss.js";
+import { InvalidInputError } from "../errors/index.js";
 
 export default class CoinTossService {
   constructor(coinTossModel, userService) {
@@ -18,13 +19,12 @@ export default class CoinTossService {
       user: user._id,
       wager,
       chosenSide,
-      flipSide: this.flipCoin()
+      won: chosenSide === this.flipCoin()
     });
 
-    let won = coinToss.chosenSide === coinToss.flipSide;
-    const balanceAdjustment = won ? wager * 2 : 0 - wager;
+    const balanceAdjustment = coinToss.won ? wager * 2 : 0 - wager;
     user.accountBalance = user.accountBalance + balanceAdjustment;
-    await this.userService.update(user, { accountBalance });
+    await this.userService.update(user);
 
     coinToss.user = user;
 

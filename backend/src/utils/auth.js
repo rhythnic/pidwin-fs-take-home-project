@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import ForbiddenError from "../errors/forbidden-error.js";
+import { ForbiddenError } from "../errors/index.js";
 
 const auth = async (req, res, next) => {
   try {

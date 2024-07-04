@@ -1,6 +1,6 @@
 import { LOGIN, LOGOUT, SET_USER } from '../constants/actionTypes';
 
-export const state = {
+export const initialState = {
     token: null,
     user: null
 }
@@ -13,7 +13,7 @@ export function hydrateState() {
         ({ token } = JSON.parse(profile));
     }
 
-    return Object.assign({}, state, { token });
+    return Object.assign({}, initialState, { token });
 }
 
 const loginReducer = (state = hydrateState(), action) => {

@@ -7,14 +7,14 @@ class CoinTossDto {
       id: model.id,
       wager: model.wager,
       chosenSide: model.chosenSide,
-      flipSide: model.flipSide,
+      won: model.won,
       createdAt: model.createdAt.toISOString()
     }
 
     if (model.user instanceof Types.ObjectId) {
       dto.user = model.user.toString();
     } else {
-      dto.user = UserDto.fromModel(dto.user);
+      dto.user = UserDto.fromModel(model.user);
     }
 
     return dto;

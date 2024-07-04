@@ -20,10 +20,9 @@ const coinTossSchema = mongoose.Schema({
     required: true,
     enum: Object.values(CoinSide),
   },
-  flipSide: {
-    type: String,
+  won: {
+    type: Boolean,
     required: true,
-    enum: Object.values(CoinSide),
   },
   createdAt: {
     type: Date,

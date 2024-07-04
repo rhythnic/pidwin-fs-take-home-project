@@ -1,16 +1,16 @@
-import ForbiddenError from "../errors/forbidden-error.js";
-import ServerError from "../errors/server-error.js";
-import NotFoundError from "../errors/not-found-error.js";
-import InvalidInputError from "../errors/invalid-input-error.js";
+import * as CustomErrors from "../errors/index.js"
 
 const errorHandler = async (error, req, res, next) => {
   if (res.headersSent) {
+    console.error(error);
     return next(error)
   }
 
-  if (error.constructor === Error) {
+  const isCustomError = Object.values(CustomErrors).includes(error.constructor);
+
+  if (!isCustomError) {
     console.error(error);
-    error = new ServerError(error.message);
+    error = new CustomErrors.ServerError(error.message);
   }
 
   const status = errorStatus(error);
@@ -21,10 +21,10 @@ const errorHandler = async (error, req, res, next) => {
 
 const errorStatus = (error) => {
   switch(error.constructor) {
-    case InvalidInputError: return 400;
-    case ForbiddenError: return 403;
-    case NotFoundError: return 404;
-    case ServerError: return 500;
+    case CustomErrors.InvalidInputError: return 400;
+    case CustomErrors.ForbiddenError: return 403;
+    case CustomErrors.NotFoundError: return 404;
+    case CustomErrors.ServerError: return 500;
     default: return 500;
   }
 }

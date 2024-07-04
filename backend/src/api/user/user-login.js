@@ -1,9 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../models/user.js";
-import ServerError from "../../errors/server-error.js";
-import NotFoundError from "../../errors/not-found-error.js";
-import InvalidInputError from "../../errors/invalid-input-error.js";
+import { ServerError, NotFoundError, InvalidInputError } from "../../errors/index.js";
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
