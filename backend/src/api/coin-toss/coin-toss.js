@@ -6,6 +6,6 @@ import CreateCoinTossRequest from "../../dto/request/create-coin-toss.dto.js";
 
 const router = express.Router();
 
-router.post("/coin-toss", auth, validate(CreateCoinTossRequest), createCoinToss);
+router.post("/", auth, validate(CreateCoinTossRequest), createCoinToss);
 
 export default router;
