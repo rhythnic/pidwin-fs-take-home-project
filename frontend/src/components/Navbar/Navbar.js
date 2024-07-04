@@ -49,49 +49,44 @@ const Navbar = () => {
       </div>
       <Toolbar sx={styles.toolbar}>
         {user !== "null" && user !== null ? (
-          <div sx={styles.profile}>
+          <>
             <Grid
               container
               direction="row"
-              justifyContent="start"
+              justifyContent="center"
               alignItems="center"
             >
+              <CircleStackIcon style={styles.tokenIcon} />
+              <Typography variant="h3" component="span">
+                {user.accountBalance}
+              </Typography>
+            </Grid>
+            <div sx={styles.profile}>
               <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
                 {user.name.charAt(0)}
               </Avatar>
               <Typography sx={styles.userName} variant="h6">
                 {user.name}
               </Typography>
-            </Grid>
-            <Grid
-              container
-              direction="row"
-              justifyContent="start"
-              alignItems="center"
-            >
-              <CircleStackIcon style={{ width:"20px", height:"20px", marginLeft: "10px", marginRight: "4px" }} />
-              <Typography sx={styles.userName} variant="h6">
-                {user.accountBalance}
-              </Typography>
-            </Grid>
-            <Button
-              variant="contained"
-              sx={styles.logout}
-              color="secondary"
-              onClick={logout}
-            >
-              Logout
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                history("/password");
-              }}
-            >
-              Set Password
-            </Button>
-          </div>
+              <Button
+                variant="contained"
+                sx={styles.logout}
+                color="secondary"
+                onClick={logout}
+              >
+                Logout
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  history("/password");
+                }}
+              >
+                Set Password
+              </Button>
+            </div>
+          </>
         ) : (
           <Button
             component={Link}
@@ -101,6 +96,7 @@ const Navbar = () => {
           >
             Login
           </Button>
+        
         )}
       </Toolbar>
     </AppBar>

@@ -40,7 +40,9 @@ export const styles = {
     marginRight: "4px",
   },
   tokenIcon: {
-    width: "5px",
-    height: "5px",
-  }
+    width:"50px",
+    height:"50px",
+    marginLeft: "10px",
+    marginRight: "4px",
+  },
 };
