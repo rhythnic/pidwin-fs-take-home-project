@@ -15,3 +15,4 @@ export const changePassword = (formData) =>
   API.post("/api/user/changePassword", formData);
 export const getUser = () => API.get("/api/user/me");
 export const createCoinToss = (formData) => API.post("/api/coin-toss", formData);
+export const findCoinTosses = () => API.get("/api/coin-toss?limit=10");

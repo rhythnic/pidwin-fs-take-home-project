@@ -50,14 +50,22 @@ const Navbar = () => {
           <>
             <Grid
               container
-              direction="row"
               justifyContent="center"
-              alignItems="center"
             >
-              <CircleStackIcon style={styles.tokenIcon} />
-              <Typography variant="h3" component="span">
-                {user.accountBalance}
+              <Typography variant="h5" component="span">
+                Token Balance
               </Typography>
+              <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <CircleStackIcon style={styles.tokenIcon} />
+                <Typography variant="h3" component="span">
+                  {user.accountBalance}
+                </Typography>
+              </Grid>
             </Grid>
             <div sx={styles.profile}>
               <Avatar sx={styles.purple} alt={user.name} src={user.picture}>

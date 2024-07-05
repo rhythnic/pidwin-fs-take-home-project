@@ -42,7 +42,6 @@ export const styles = {
   tokenIcon: {
     width:"50px",
     height:"50px",
-    marginLeft: "10px",
     marginRight: "4px",
   },
 };

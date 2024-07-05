@@ -24,6 +24,10 @@ const coinTossSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  bonus: {
+    type: Number,
+    required: false,
+  },
   createdAt: {
     type: Date,
     required: true,

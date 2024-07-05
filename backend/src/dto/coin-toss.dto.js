@@ -8,6 +8,7 @@ class CoinTossDto {
       wager: model.wager,
       chosenSide: model.chosenSide,
       won: model.won,
+      bonus: model.bonus,
       createdAt: model.createdAt.toISOString()
     }
 
