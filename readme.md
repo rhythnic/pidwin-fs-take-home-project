@@ -2,6 +2,14 @@
 
 The Pidwin Fullstack Assessment.
 
+## Run with Docker Compose
+
+No setup required
+
+```bash
+docker compose up --build
+```
+
 ## Project setup
 
 Enter each folder:
